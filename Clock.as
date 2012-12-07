@@ -8,7 +8,6 @@
 	public class Clock extends MovieClip {
 		private var _clockTimer:Timer;
 		private var _targetDate:Date;
-		private var _tickSound:Sound = new TickSound();
 		
 		// CONSTRUCTOR
 		public function Clock() {
@@ -27,7 +26,6 @@
 		
 		private function update(e:TimerEvent = null):void {
 			var now:Date = new Date(); // get the current time
-			_tickSound.play();	
 			
 			// find the difference (in ms) between the target and now
 			var diff:Number = _targetDate.valueOf() - now.valueOf();

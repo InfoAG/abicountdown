@@ -1,7 +1,6 @@
 ﻿package {
  
     import flash.display.MovieClip;
-	import flash.media.Sound;
 	import flash.utils.setInterval;
 	import flash.utils.Timer;
 	
@@ -15,7 +14,6 @@
         private var _currentDigit:Array;
         private var _nextDigit:Array;
         private var _number:String = "0";
-		private var _tickSound:Sound = new TickSound();
          
         // CONSTRUCTOR
         public function Digit()
@@ -29,7 +27,6 @@
 		
 		public function flipTo(num:String):void
 		{
-			_tickSound.play();
     		_number = num;
     		_nextDigit[TOP].t_num.text = num;
     		_nextDigit[BOTTOM].t_num.text = num;
