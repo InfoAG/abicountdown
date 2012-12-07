@@ -27,7 +27,16 @@
 			
 			var flights:Array = new Array("Kairo","Kapstadt","Nairobi","Las Vegas","Miami","Montreal","New York","Toronto","Havanna","Montevideo","Bangkok","Dubai","Hongkong","Jakarta","Manila","Singapur","Adelaide","Canberra","Melbourne","Perth","Sydney","Benelux","Amsterdam","Luxemburg","Berlin","Nizza","Paris","London","Florenz","Mailand","Rom","Venedig","Lissabon","Kopenhagen","Stockholm","Oslo","Barcelona","Madrid","Budapest","Dublin","Moskau","Prag","Wien");
 			var gates:Array = new Array("A5","S2","D6","E1","A1","B8","C9","A9","B3","C6","D0","E3","F2,G8","A6");
-			var statusArray:Array = new Array("on time","boarding");
+			var statusArray:Array = new Array("on time","boarding", "delayed", "cancelled");
+			
+			var gates:Array;
+			for (var j:int = 0; j < 8; j++) {
+				var gate:String = String.fromCharCode(65 + 25 * Math.random());
+				do {
+					gate = gate.charAt(0) + int(9 * Math.random());
+				} while (gates.indexOf(gate) != -1)
+				gates.push(gate);
+			}
 			
 			for(var i:int = 0; i < 8; i++) //Anzahl der Zeilen
 			{
@@ -54,6 +63,9 @@
 					}
 					
 				}
+				
+				this["gate" + i].letter.goal = gates[i].charAt(0);
+				this["gate" + i].gate_num.goal = gates[i].charAt(1);
 				
 				k = Math.random() * (statusArray.length - 1);
 				statusArray[k] = statusArray[k].toUpperCase();
