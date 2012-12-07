@@ -49,7 +49,8 @@
 					{
 						for(var l:int = 32; l <= flights[k].toString().charAt(j).charCodeAt(0); l++)
 						{
-							//if(l <= 47 && l >=34)
+							if((l <= 47 && l >=34) || (l >= 58 && l <= 64))
+								continue;
 							timer = new DataTimer(50*(l-31),1);
 							timer.data.char = String.fromCharCode(l);
 							timer.data.digitNumber = "digit" + j;
