@@ -29,7 +29,7 @@
 			var gates:Array = new Array("A5","S2","D6","E1","A1","B8","C9","A9","B3","C6","D0","E3","F2,G8","A6");
 			var statusArray:Array = new Array("on time","boarding");
 			
-			for(var i:int = 0; i < 5; i++) //Anzahl der Zeilen
+			for(var i:int = 0; i < 8; i++) //Anzahl der Zeilen
 			{
 
 				this["time" + i].hour0.goal = int(now.getHours()/10);
@@ -71,14 +71,6 @@
 				}
 									
 			}
-			
-			
-			
-			
-			
-			
-			
-			
 			
         }
 		
