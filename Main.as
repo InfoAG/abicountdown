@@ -7,18 +7,35 @@
  
     public class Main extends MovieClip {
  
- 		private var _timer:Timer;
+ 		private var _screenTimer:Timer, _G8Timer:Timer;
 		private var _targetDate:Date;
+		private var flights:Array, statusArray:Array;
+		private var _allowG8:Boolean; 
  
  		public function Main()
 		{
+			_allowG8 = false;
+			
 			_targetDate = new Date();
 			_targetDate.setTime(Date.UTC(2013, 3, 23, 12, 0));
 			
-			_timer = new Timer(40000);
-			_timer.addEventListener(TimerEvent.TIMER, update);
-			_timer.start();
+			flights = new Array("Kairo","Kapstadt","Nairobi","Las Vegas","Miami","Montreal","New York","Toronto","Havanna","Montevideo","Bangkok","Dubai","Hongkong","Jakarta","Manila","Singapur","Adelaide","Canberra","Melbourne","Perth","Sydney","Benelux","Amsterdam","Luxemburg","Berlin","Nizza","Paris","London","Florenz","Mailand","Rom","Venedig","Lissabon","Kopenhagen","Stockholm","Oslo","Barcelona","Madrid","Budapest","Dublin","Moskau","Prag","Wien");
+			statusArray = new Array("on time","boarding", "delayed", "cancelled", "last call");
+			
+			//_G8Timer = new Timer(1200000);
+			_G8Timer = new Timer(120000);
+			_G8Timer.addEventListener(TimerEvent.TIMER, allowG8);
+			_G8Timer.start();
+			
+			_screenTimer = new Timer(40000);
+			_screenTimer.addEventListener(TimerEvent.TIMER, update);
+			_screenTimer.start();
 			update(new TimerEvent(TimerEvent.TIMER));
+		}
+		
+		public function allowG8(e:TimerEvent)
+		{
+			_allowG8 = true;
 		}
  
         public function update(e:TimerEvent)
@@ -40,20 +57,23 @@
 			
 			// number of minutes
 			var ourMins:int = Math.floor(diff/ 60);
-			
-			var flights:Array = new Array("Kairo","Kapstadt","Nairobi","Las Vegas","Miami","Montreal","New York","Toronto","Havanna","Montevideo","Bangkok","Dubai","Hongkong","Jakarta","Manila","Singapur","Adelaide","Canberra","Melbourne","Perth","Sydney","Benelux","Amsterdam","Luxemburg","Berlin","Nizza","Paris","London","Florenz","Mailand","Rom","Venedig","Lissabon","Kopenhagen","Stockholm","Oslo","Barcelona","Madrid","Budapest","Dublin","Moskau","Prag","Wien");
-			var statusArray:Array = new Array("on time","boarding", "delayed", "cancelled", "last call");
 
 			var gates:Array = new Array();
 			for (var j:int = 0; j < 7; j++) {
 				var gate:String = String.fromCharCode(65 + 25 * Math.random());
 				do {
 					gate = gate.charAt(0) + int(9 * Math.random());
-				} while (gates.indexOf(gate) != -1)
+				} while (gate == "G9" || gate == "G8" || gates.indexOf(gate) != -1)
 				gates.push(gate);
 			}
 
 			var ourPos:int = 8 * Math.random();
+			var G8Pos:int = -1;
+			if (_allowG8) {
+				_allowG8 = false;
+				G8Pos = 7 * Math.random();
+				if (ourPos <= G8Pos) G8Pos += 1;
+			}
 			
 			for(var i:int = 0; i < 8; i++) //Anzahl der Zeilen
 			{
@@ -63,9 +83,16 @@
 					days = ourDays.toString();
 					hours = ourHours.toString();
 					mins = ourMins.toString();
-					flight = "ABI13";
+					flight = "ABI2013";
 					gate = "G9";
 					statusStr = "ON TIME";
+				} else if (i == G8Pos) {
+					days = "???";
+					hours = "??";
+					mins = "??";
+					flight = "ABI2013"
+					gate = "G8";
+					statusStr = "CANCELLED";
 				} else {
 					days = "000";
 					hours = int(24 * Math.random()).toString();
