@@ -40,7 +40,7 @@
 					timer.start();
 				}
 				
-				var k:int = Math.random() * (flights.length-1 - 0) + 0;
+				var k:int = Math.random() * (flights.length - 1);
 				flights[k] = flights[k].toUpperCase();			
 				for(var j:int = 0; j < 14; j++) //14 Elemente in String
 				{
@@ -49,25 +49,25 @@
 					{
 						for(var l:int = 32; l <= flights[k].toString().charAt(j).charCodeAt(0); l++)
 						{
-							if((l <= 47 && l >=34) || (l >= 58 && l <= 64))
+							if((l <= 47 && l >= 34) || (l >= 58 && l <= 64))
 								continue;
-							timer = new DataTimer(50*(l-31),1);
+							timer = new DataTimer(50 * (l - 31 ), 1);
 							timer.data.char = String.fromCharCode(l);
 							timer.data.digitNumber = "digit" + j;
 							timer.data.stringNumber = "string" + i;
-							timer.addEventListener(TimerEvent.TIMER_COMPLETE,letter_set);
+							timer.addEventListener(TimerEvent.TIMER_COMPLETE, letter_set);
 							timer.start();
 						}
 						
 					}
 					else
 					{
-						this["string"+i]["digit"+j].flipTo("");
+						this["string" + i]["digit" + j].flipTo("");
 					}
 					
 				}
 				
-				k = Math.random() * (statusArray.length-1 - 0) + 0;
+				k = Math.random() * (statusArray.length - 1);
 				statusArray[k] = statusArray[k].toUpperCase();
 				for(var j:int = 0; j < 9; j++)
 				{
