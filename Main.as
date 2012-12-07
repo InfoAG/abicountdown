@@ -9,7 +9,7 @@
  
  		private var _screenTimer:Timer, _G8Timer:Timer;
 		private var _targetDate:Date;
-		private var flights:Array, statusArray:Array;
+		private var _tutors:Array, _airlineExtensions:Array, _statusArray:Array;
 		private var _allowG8:Boolean; 
  
  		public function Main()
@@ -19,8 +19,10 @@
 			_targetDate = new Date();
 			_targetDate.setTime(Date.UTC(2013, 3, 23, 12, 0));
 			
-			flights = new Array("Kairo","Kapstadt","Nairobi","Las Vegas","Miami","Montreal","New York","Toronto","Havanna","Montevideo","Bangkok","Dubai","Hongkong","Jakarta","Manila","Singapur","Adelaide","Canberra","Melbourne","Perth","Sydney","Benelux","Amsterdam","Luxemburg","Berlin","Nizza","Paris","London","Florenz","Mailand","Rom","Venedig","Lissabon","Kopenhagen","Stockholm","Oslo","Barcelona","Madrid","Budapest","Dublin","Moskau","Prag","Wien");
-			statusArray = new Array("on time","boarding", "delayed", "cancelled", "last call");
+			_tutors = new Array("perdun", "neubert", "schuengel", "priebs");
+			_airlineExtensions = new Array(["air", true], ["air", false], ["jet", false], ["easy", true], ["wings", false],
+										   ["travel", false], ["cargo", false], ["charter", false], ["fly", false]);
+			_statusArray = new Array("on time","boarding", "delayed", "cancelled", "last call");
 			
 			//_G8Timer = new Timer(1200000);
 			_G8Timer = new Timer(120000);
@@ -99,9 +101,15 @@
 					if (hours.length == 1) hours = "0" + hours;
 					mins = int(60 * Math.random()).toString();
 					if (mins.length == 1) mins = "0" + mins;
-					flight = flights[int(Math.random() * (flights.length - 1))].toUpperCase();
+					do {
+						var extension:Array = _airlineExtensions[int(Math.random() * _airlineExtensions.length)];
+						if (extension[1])
+							flight = extension[0] + " " + _tutors[int(Math.random() * _tutors.length)];
+						else
+							flight =  _tutors[int(Math.random() * _tutors.length)] + " " + extension[0];
+					} while (flight.length > 14)
 					gate = gates.shift();
-					statusStr = statusArray[int(Math.random() * (statusArray.length - 1))].toUpperCase();
+					statusStr = _statusArray[int(Math.random() * _statusArray.length)];
 				}
 				for (var j:int = 0; j < 3; j++) this["time" + i]["d" + j].goal = days.charAt(j);
 				for (var j:int = 0; j < 2; j++) this["time" + i]["h" + j].goal = hours.charAt(j);
@@ -111,7 +119,7 @@
 				
 					if(j < flight.length)
 					{
-						this["string" + i]["digit" + j].goal = flight.charAt(j);
+						this["string" + i]["digit" + j].goal = flight.toUpperCase().charAt(j);
 						
 					}
 					else
@@ -128,7 +136,7 @@
 				{
 					if(j < statusStr.length)
 					{
-						this["status" + i]["l" + j].goal = statusStr.charAt(j);
+						this["status" + i]["l" + j].goal = statusStr.toUpperCase().charAt(j);
 					}
 					
 					else
