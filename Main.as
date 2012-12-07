@@ -8,9 +8,13 @@
     public class Main extends MovieClip {
  
  		private var _timer:Timer;
+		private var _targetDate:Date;
  
  		public function Main()
 		{
+			_targetDate = new Date();
+			_targetDate.setTime(Date.UTC(2013, 3, 23, 12, 0));
+			
 			_timer = new Timer(40000);
 			_timer.addEventListener(TimerEvent.TIMER, update);
 			_timer.start();
@@ -19,11 +23,23 @@
  
         public function update(e:TimerEvent)
 		{
-			
-			var targetDate:Date = new Date();
-			targetDate.setTime(Date.UTC(2013, 3, 23, 12, 0));
-			//clock.set(targetDate);
 			var now:Date = new Date();			
+			
+			var diff:Number = _targetDate.valueOf() - now.valueOf();
+			
+			// convert to seconds
+			diff = Math.round(diff/1000);
+			
+			// number of days
+			var ourDays:int = Math.floor(diff/ (24 * 60 * 60));
+			diff -= ourDays*(24 * 60 * 60 );
+			
+			// number of hours
+			var ourHours:int = Math.floor(diff / (60 * 60))
+			diff -= ourHours*60 * 60;
+			
+			// number of minutes
+			var ourMins:int = Math.floor(diff/ 60);
 			
 			var flights:Array = new Array("Kairo","Kapstadt","Nairobi","Las Vegas","Miami","Montreal","New York","Toronto","Havanna","Montevideo","Bangkok","Dubai","Hongkong","Jakarta","Manila","Singapur","Adelaide","Canberra","Melbourne","Perth","Sydney","Benelux","Amsterdam","Luxemburg","Berlin","Nizza","Paris","London","Florenz","Mailand","Rom","Venedig","Lissabon","Kopenhagen","Stockholm","Oslo","Barcelona","Madrid","Budapest","Dublin","Moskau","Prag","Wien");
 			var statusArray:Array = new Array("on time","boarding", "delayed", "cancelled", "last call");
@@ -44,13 +60,18 @@
 				var days:String = new String(), hours:String = new String(), mins:String = new String(), flight:String = new String(), gate:String = new String(), statusStr:String = new String();
 
 				if (i == ourPos) {
+					days = ourDays.toString();
+					hours = ourHours.toString();
+					mins = ourMins.toString();
 					flight = "ABI13";
 					gate = "G9";
 					statusStr = "ON TIME";
 				} else {
 					days = "000";
 					hours = int(24 * Math.random()).toString();
+					if (hours.length == 1) hours = "0" + hours;
 					mins = int(60 * Math.random()).toString();
+					if (mins.length == 1) mins = "0" + mins;
 					flight = flights[int(Math.random() * (flights.length - 1))].toUpperCase();
 					gate = gates.shift();
 					statusStr = statusArray[int(Math.random() * (statusArray.length - 1))].toUpperCase();
