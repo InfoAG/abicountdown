@@ -4,7 +4,6 @@
 	import flash.utils.setInterval;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
-	import flash.geom.ColorTransform;
 	
 	import com.greensock.*
 	import com.greensock.easing.*
