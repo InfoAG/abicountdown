@@ -10,7 +10,9 @@
  
  		private var _screenTimer:Timer, _G8Timer:Timer;
 		private var _targetDate:Date;
-		private const _teachers:Array = ["perdun", "neubert", "schuengel", "priebs", "heinrich", "wiberny", "unkel", "becker"];
+		private const _teachers:Array = ["perdun", "neubert", "schuengel", "priebs", "heinrich", "wiberny", "unkel", "becker",
+										 "diehl", "fleger", "grave", "langela", "mueller", "schmitz", "schrand", "selle", "straub",
+										 "wilk", "zech", "hubi"];
 		private const _airlineExtensions:Array = [["air", true], ["air", false], ["jet", false], ["easy", true], ["wings", false],
 										   		  ["travel", false], ["cargo", false], ["charter", false], ["fly", false]];
 		private const _statusArray:Array =  ["on time","boarding", "delayed", "cancelled", "last call"];
@@ -20,8 +22,7 @@
 		{
 			_allowG8 = false;
 			
-			_targetDate = new Date();
-			_targetDate.setTime(Date.UTC(2013, 3, 23, 12, 0));
+			_targetDate = new Date(2013, 2, 22, 12, 0);
 			
 			//_G8Timer = new Timer(1200000);
 			_G8Timer = new Timer(120000);
@@ -44,7 +45,7 @@
 			var now:Date = new Date();			
 			
 			var diff:Number = _targetDate.valueOf() - now.valueOf();
-			
+
 			// convert to seconds
 			diff = Math.round(diff/1000);
 			
@@ -90,9 +91,7 @@
 				} else {
 					days = "000";
 					hours = int(24 * Math.random()).toString();
-					if (hours.length == 1) hours = "0" + hours;
 					mins = int(60 * Math.random()).toString();
-					if (mins.length == 1) mins = "0" + mins;
 
 					var teacherPos:int, extension:Array;
 					do {
@@ -104,18 +103,28 @@
 						flight = extension[0] + " " + teacherCopy[teacherPos];
 					else
 						flight =  teacherCopy[teacherPos] + " " + extension[0];
-					teacherCopy.splice(teacherPos, 1);
+					
 					
 					do {
 						gate = String.fromCharCode(65 + 25 * Math.random()) + int(1 + 9 * Math.random());
 					} while (gate == "G9" || gate == "G8" || gates.indexOf(gate) != -1)
 					gates.push(gate);
 
-					statusStr = _statusArray[int(Math.random() * _statusArray.length)];
+					if (teacherCopy[teacherPos] == "hubi")
+						statusStr = "SMOKING";
+					else
+						statusStr = _statusArray[int(Math.random() * _statusArray.length)];
+					
+					teacherCopy.splice(teacherPos, 1);
 				}
+				
+				while (days.length < 3) days = "0" + days;
+				if (hours.length == 1) hours = "0" + hours;
+				if (mins.length == 1) mins = "0" + mins;
 				for (var j:int = 0; j < 3; j++) this["time" + i]["d" + j].goal = days.charAt(j);
 				for (var j:int = 0; j < 2; j++) this["time" + i]["h" + j].goal = hours.charAt(j);
 				for (var j:int = 0; j < 2; j++) this["time" + i]["m" + j].goal = mins.charAt(j);
+				
 				for(var j:int = 0; j < 14; j++) //14 Elemente in String
 				{
 				
