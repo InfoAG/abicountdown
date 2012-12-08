@@ -3,7 +3,7 @@
     import flash.display.MovieClip;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
-	import flash.utils.ByteArray; 
+
 	//import flash.utils.randomRange;
  
     public class Main extends MovieClip {
