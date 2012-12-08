@@ -49,16 +49,32 @@
 			// convert to seconds
 			diff = Math.round(diff/1000);
 			
-			// number of days
-			var ourDays:int = Math.floor(diff/ (24 * 60 * 60));
-			diff -= ourDays*(24 * 60 * 60 );
-			
-			// number of hours
-			var ourHours:int = Math.floor(diff / (60 * 60))
-			diff -= ourHours*60 * 60;
-			
-			// number of minutes
-			var ourMins:int = Math.floor(diff/ 60);
+			var ourStatus:String;
+			if (diff <= 0) {
+				ourDays = 0;
+				ourHours = 0;
+				ourMins = 0;
+				ourStatus = "DEPARTED";
+			} else {
+				// number of days
+				var ourDays:int = Math.floor(diff/ (24 * 60 * 60));
+				diff -= ourDays*(24 * 60 * 60 );
+				
+				// number of hours
+				var ourHours:int = Math.floor(diff / (60 * 60))
+				diff -= ourHours*60 * 60;
+				
+				// number of minutes
+				var ourMins:int = Math.floor(diff/ 60);
+				
+				if (ourDays == 0 && ourHours < 6) {
+					if (ourHours < 2)
+						ourStatus = "LAST CALL";
+					else 
+						ourStatus = "BOARDING";
+				} else
+					ourStatus = "ON TIME";
+			}
 
 			var gates:Array = [];
 			var teacherCopy = _teachers.concat();
@@ -80,7 +96,7 @@
 					mins = ourMins.toString();
 					flight = "ABI2013";
 					gate = "G9";
-					statusStr = "ON TIME";
+					statusStr = ourStatus;
 				} else if (i == G8Pos) {
 					days = "???";
 					hours = "??";
