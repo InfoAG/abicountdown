@@ -4,6 +4,7 @@
 	import flash.utils.setInterval;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
+	import flash.geom.ColorTransform;
 	
 	import com.greensock.*
 	import com.greensock.easing.*
@@ -14,7 +15,7 @@
  
         private var _currentDigit:Array;
         private var _nextDigit:Array;
-		private var _goal:String;
+		private var _goal:Array;
         private var _current:String = "0";
 		private var _timer:Timer;
 		private var _distance:int;
@@ -31,15 +32,21 @@
 			reset();
         }
 		
-		public function set goal(goal:String):void
+		public function set goal(goal:Array):void
 		{
 			_goal = goal;
-			if (goal != _current) {
-				if (goal.charCodeAt() > _current.charCodeAt())
-					_distance = goal.charCodeAt() - _current.charCodeAt();
-				else _distance = 90 - _current.charCodeAt() + goal.charCodeAt() - 32 + 1;
+			if (goal[0] != _current) {
+				if (goal[0].charCodeAt() > _current.charCodeAt())
+					_distance = goal[0].charCodeAt() - _current.charCodeAt();
+				else _distance = 90 - _current.charCodeAt() + goal[0].charCodeAt() - 32 + 1;
 				
-				_timer.start();
+				_currentDigit[TOP].t_num.textColor = 0xFFFFFF;
+				_currentDigit[BOTTOM].t_num.textColor = 0xFFFFFF;
+				
+				flip(new TimerEvent(TimerEvent.TIMER));
+			} else if (goal[1] != _currentDigit[TOP].t_num.textColor) {
+				_currentDigit[TOP].t_num.textColor = _goal[1];
+				_currentDigit[BOTTOM].t_num.textColor = _goal[1];
 			}
 		}
 		
@@ -50,6 +57,10 @@
 			else _current = String.fromCharCode(_current.charCodeAt() + 1);
     		_nextDigit[TOP].t_num.text = _current;
     		_nextDigit[BOTTOM].t_num.text = _current;
+			if (_distance == 1) {
+				_nextDigit[TOP].t_num.textColor = _goal[1];
+				_nextDigit[BOTTOM].t_num.textColor = _goal[1];
+			}
      
 			// flip down the top of the digit to the halfway point
 			TweenLite.to(_currentDigit[TOP], .15, {scaleY: 0, ease: Linear.easeNone});
