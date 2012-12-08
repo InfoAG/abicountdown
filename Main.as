@@ -9,7 +9,10 @@
  
  		private var _screenTimer:Timer, _G8Timer:Timer;
 		private var _targetDate:Date;
-		private var _tutors:Array, _airlineExtensions:Array, _statusArray:Array;
+		private const _teachers:Array = ["perdun", "neubert", "schuengel", "priebs", "heinrich", "wiberny", "unkel", "becker"];
+		private const _airlineExtensions:Array = [["air", true], ["air", false], ["jet", false], ["easy", true], ["wings", false],
+										   		  ["travel", false], ["cargo", false], ["charter", false], ["fly", false]];
+		private const _statusArray:Array =  ["on time","boarding", "delayed", "cancelled", "last call"];
 		private var _allowG8:Boolean; 
  
  		public function Main()
@@ -18,11 +21,6 @@
 			
 			_targetDate = new Date();
 			_targetDate.setTime(Date.UTC(2013, 3, 23, 12, 0));
-			
-			_tutors = new Array("perdun", "neubert", "schuengel", "priebs");
-			_airlineExtensions = new Array(["air", true], ["air", false], ["jet", false], ["easy", true], ["wings", false],
-										   ["travel", false], ["cargo", false], ["charter", false], ["fly", false]);
-			_statusArray = new Array("on time","boarding", "delayed", "cancelled", "last call");
 			
 			//_G8Timer = new Timer(1200000);
 			_G8Timer = new Timer(120000);
@@ -60,14 +58,8 @@
 			// number of minutes
 			var ourMins:int = Math.floor(diff/ 60);
 
-			var gates:Array = new Array();
-			for (var j:int = 0; j < 7; j++) {
-				var gate:String = String.fromCharCode(65 + 25 * Math.random());
-				do {
-					gate = gate.charAt(0) + int(9 * Math.random());
-				} while (gate == "G9" || gate == "G8" || gates.indexOf(gate) != -1)
-				gates.push(gate);
-			}
+			var gates:Array = [];
+			var teacherCopy = _teachers;
 
 			var ourPos:int = 8 * Math.random();
 			var G8Pos:int = -1;
@@ -77,10 +69,9 @@
 				if (ourPos <= G8Pos) G8Pos += 1;
 			}
 			
+			var days:String = new String(), hours:String = new String(), mins:String = new String(), flight:String = new String(), gate:String = new String(), statusStr:String = new String();
 			for(var i:int = 0; i < 8; i++) //Anzahl der Zeilen
 			{
-				var days:String = new String(), hours:String = new String(), mins:String = new String(), flight:String = new String(), gate:String = new String(), statusStr:String = new String();
-
 				if (i == ourPos) {
 					days = ourDays.toString();
 					hours = ourHours.toString();
@@ -101,14 +92,24 @@
 					if (hours.length == 1) hours = "0" + hours;
 					mins = int(60 * Math.random()).toString();
 					if (mins.length == 1) mins = "0" + mins;
+					
+					var teacherPos:int, extension:Array;
 					do {
-						var extension:Array = _airlineExtensions[int(Math.random() * _airlineExtensions.length)];
-						if (extension[1])
-							flight = extension[0] + " " + _tutors[int(Math.random() * _tutors.length)];
-						else
-							flight =  _tutors[int(Math.random() * _tutors.length)] + " " + extension[0];
-					} while (flight.length > 14)
-					gate = gates.shift();
+						extension = _airlineExtensions[int(Math.random() * _airlineExtensions.length)];
+						teacherPos = int(Math.random() * teacherCopy.length);
+					} while (extension[0].length + teacherCopy[teacherPos].length > 13)
+					
+					if (extension[1])
+						flight = extension[0] + " " + teacherCopy[teacherPos];
+					else
+						flight =  teacherCopy[teacherPos] + " " + extension[0];
+					teacherCopy.splice(teacherPos, 1);
+					
+					do {
+						gate = String.fromCharCode(65 + 25 * Math.random()) + int(1 + 9 * Math.random());
+					} while (gate == "G9" || gate == "G8" || gates.indexOf(gate) != -1)
+					gates.push(gate);
+					
 					statusStr = _statusArray[int(Math.random() * _statusArray.length)];
 				}
 				for (var j:int = 0; j < 3; j++) this["time" + i]["d" + j].goal = days.charAt(j);
