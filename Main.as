@@ -3,6 +3,7 @@
     import flash.display.MovieClip;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
+	import flash.utils.ByteArray; 
 	//import flash.utils.randomRange;
  
     public class Main extends MovieClip {
@@ -59,7 +60,7 @@
 			var ourMins:int = Math.floor(diff/ 60);
 
 			var gates:Array = [];
-			var teacherCopy = _teachers;
+			var teacherCopy = _teachers.concat();
 
 			var ourPos:int = 8 * Math.random();
 			var G8Pos:int = -1;
@@ -92,13 +93,13 @@
 					if (hours.length == 1) hours = "0" + hours;
 					mins = int(60 * Math.random()).toString();
 					if (mins.length == 1) mins = "0" + mins;
-					
+
 					var teacherPos:int, extension:Array;
 					do {
 						extension = _airlineExtensions[int(Math.random() * _airlineExtensions.length)];
 						teacherPos = int(Math.random() * teacherCopy.length);
 					} while (extension[0].length + teacherCopy[teacherPos].length > 13)
-					
+
 					if (extension[1])
 						flight = extension[0] + " " + teacherCopy[teacherPos];
 					else
@@ -109,7 +110,7 @@
 						gate = String.fromCharCode(65 + 25 * Math.random()) + int(1 + 9 * Math.random());
 					} while (gate == "G9" || gate == "G8" || gates.indexOf(gate) != -1)
 					gates.push(gate);
-					
+
 					statusStr = _statusArray[int(Math.random() * _statusArray.length)];
 				}
 				for (var j:int = 0; j < 3; j++) this["time" + i]["d" + j].goal = days.charAt(j);
@@ -129,7 +130,7 @@
 					}
 					
 				}
-				
+
 				this["gate" + i].letter.goal = gate.charAt(0);
 				this["gate" + i].gate_num.goal = gate.charAt(1);
 
