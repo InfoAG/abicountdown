@@ -99,7 +99,7 @@
 					flight = "ABI2013";
 					gate = "G9";
 					statusStr = ourStatus;
-					lineColor = 0x00FF00;
+					lineColor = 0xFCFF00;
 				} else {
 					lineColor = 0xFFFFFF;
 					if (i == G8Pos) {
