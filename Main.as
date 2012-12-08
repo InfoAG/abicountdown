@@ -12,7 +12,7 @@
 		private var _targetDate:Date;
 		private const _teachers:Array = ["perdun", "neubert", "schuengel", "priebs", "heinrich", "wiberny", "unkel", "becker",
 										 "diehl", "fleger", "grave", "langela", "mueller", "schmitz", "schrand", "selle", "straub",
-										 "wilk", "zech", "hubi"];
+										 "wilk", "zech", "hubi", "uwe"];
 
 		private const _airlineExtensions:Array = [["air", true], ["air", false], ["jet", false], ["easy", true], ["wings", false],
 										   		  ["travel", false], ["cargo", false], ["charter", false], ["fly", false]];
