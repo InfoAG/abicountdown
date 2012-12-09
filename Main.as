@@ -15,7 +15,9 @@
 										 "wilk", "zech", "hubi", "uwe"];
 
 		private const _airlineExtensions:Array = [["air", true], ["air", false], ["jet", false], ["easy", true], ["wings", false],
-										   		  ["travel", false], ["cargo", false], ["charter", false], ["fly", false]];
+						 						  ["travel", false], ["cargo", false], ["charter", false], ["fly", false],
+						 						  ["jumbo", false], ["express", false], ["sky", true], ["sky", false], ["aviation", false],
+					 	 						  ["freight", false], ["horizon", false], ["shuttle", false]];
 		private const _statusArray:Array =  ["on time","boarding", "delayed", "cancelled", "last call"];
 		private var _allowG8:Boolean; 
  
