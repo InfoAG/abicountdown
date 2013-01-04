@@ -27,12 +27,11 @@
 			
 			_targetDate = new Date(2013, 2, 22, 12, 0);
 			
-			//_G8Timer = new Timer(1200000);
-			_G8Timer = new Timer(120000);
+			_G8Timer = new Timer(1200000);
 			_G8Timer.addEventListener(TimerEvent.TIMER, allowG8);
 			_G8Timer.start();
 			
-			_screenTimer = new Timer(40000);
+			_screenTimer = new Timer(50000);
 			_screenTimer.addEventListener(TimerEvent.TIMER, update);
 			_screenTimer.start();
 			update(new TimerEvent(TimerEvent.TIMER));
@@ -129,7 +128,7 @@
 						
 						
 						do {
-							gate = String.fromCharCode(65 + 25 * Math.random()) + int(1 + 9 * Math.random());
+							gate = String.fromCharCode(65 + 11 * Math.random()) + int(1 + 9 * Math.random());
 						} while (gate == "G9" || gate == "G8" || gates.indexOf(gate) != -1)
 						gates.push(gate);
 	
