@@ -104,14 +104,14 @@
 				} else {
 					lineColor = 0xFFFFFF;
 					if (i == G8Pos) {
-						days = "???";
+						days = "??";
 						hours = "??";
 						mins = "??";
 						flight = "ABI2013"
 						gate = "G8";
 						statusStr = "CANCELLED";
 					} else {
-						days = "000";
+						days = "00";
 						hours = int(24 * Math.random()).toString();
 						mins = int(60 * Math.random()).toString();
 	
@@ -141,10 +141,10 @@
 					}
 				}
 				
-				while (days.length < 3) days = "0" + days;
+				if (days.length == 1) days = "0" + days;
 				if (hours.length == 1) hours = "0" + hours;
 				if (mins.length == 1) mins = "0" + mins;
-				for (var j:int = 1; j < 3; j++) this["time" + i]["d" + j].goal = [days.charAt(j), lineColor];
+				for (var j:int = 0; j < 2; j++) this["time" + i]["d" + (j + 1)].goal = [days.charAt(j), lineColor];
 				for (var j:int = 0; j < 2; j++) this["time" + i]["h" + j].goal = [hours.charAt(j), lineColor];
 				for (var j:int = 0; j < 2; j++) this["time" + i]["m" + j].goal = [mins.charAt(j), lineColor];
 
