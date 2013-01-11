@@ -145,7 +145,7 @@
 				while (days.length < 3) days = "0" + days;
 				if (hours.length == 1) hours = "0" + hours;
 				if (mins.length == 1) mins = "0" + mins;
-				for (var j:int = 0; j < 3; j++) this["time" + i]["d" + j].goal = [days.charAt(j), lineColor];
+				for (var j:int = 1; j < 3; j++) this["time" + i]["d" + j].goal = [days.charAt(j), lineColor];
 				for (var j:int = 0; j < 2; j++) this["time" + i]["h" + j].goal = [hours.charAt(j), lineColor];
 				for (var j:int = 0; j < 2; j++) this["time" + i]["m" + j].goal = [mins.charAt(j), lineColor];
 
